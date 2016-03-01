@@ -2,7 +2,7 @@
 Contributors: FolioVision
 Tags: screen,screen options,editor
 Requires at least: 2.7
-Tested up to: 4.1
+Tested up to: 4.4.2
 Stable tag: trunk
 
 Simple plugin which lets you manage Screen Options of all the users on your blog.
@@ -18,6 +18,9 @@ A huge time saver. Enjoy!
 [Free support available on our forums](https://foliovision.com/support/fv-clone-screen-options/)
 
 == Changelog ==
+
+= Version 0.2.3 =
+* Fix for PHP warnings caused by new WordPress version.
 
 = Version 0.2.2 =
 * Added support of WP 3.0 post types
