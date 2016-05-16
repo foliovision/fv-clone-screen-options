@@ -109,7 +109,7 @@ function fv_screen_options_head() {
       if(isset($_POST['save_post_screen_options'])) {
         /*  get all the users IDs and save the new settings for each one of them  */
         global $wpdb;
-        $users = $wpdb->get_col("SELECT ID FROM {$wpdb->users} ORDER BY display_name");
+        $users = $wpdb->get_col("SELECT ID FROM {$wpdb->users} AS u JOIN {$wpdb->usermeta} AS m on u.ID = m.user_id WHERE m.meta_key = '{$wpdb->prefix}capabilities' and m.meta_value != 'a:1:{s:10:\"subscriber\";b:1;}' ORDER BY display_name");
         foreach( $users AS $userid) {
         	$user_object = new WP_User($userid);
   				$roles = $user_object->roles;
