@@ -2,7 +2,7 @@
 Contributors: FolioVision
 Tags: screen,screen options,editor
 Requires at least: 2.7
-Tested up to: 4.5.2
+Tested up to: 4.6.1
 Stable tag: trunk
 
 Simple plugin which lets you manage Screen Options of all the users on your blog.
