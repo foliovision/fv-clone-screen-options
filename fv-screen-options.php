@@ -3,7 +3,7 @@
 Plugin Name: FV Clone Screen Options 
 Plugin URI: http://foliovision.com/seo-tools/wordpress/plugins/fv-clone-screen-options
 Description: Simple plugin which lets you manage Screen Options of all the users on your blog.
-Version: 0.2.4
+Version: 0.2.5
 Author URI: http://foliovision.com
 
 Copyright (c) 2016 Foliovision (http://foliovision.com)
@@ -196,7 +196,8 @@ function fv_screen_options_user_register($user_ID) {
   $user_object = new WP_User($userid);
 	$roles = $user_object->roles;
 	$role = array_shift($roles);
-	if( $role == 'subscriber' )
+  
+	if( !$role || $role == 'subscriber' )
 		return;
 		
 	$fv_screen_options_array= fv_screen_options_get_metanames();

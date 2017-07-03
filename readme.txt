@@ -15,30 +15,35 @@ First set your own Screen Options and then **clone them across all users** with 
 
 A huge time saver. Enjoy!
 
+Note: Multisite is not supported very well, plugin doesn't distinguish between individual blogs.
+
 [Free support available on our forums](https://foliovision.com/support/fv-clone-screen-options/)
 
 == Changelog ==
 
-= Version 0.2.4 =
+= Version 0.2.5 - 2017/07/03 =
+* Hotfix for Multisite - plugin was adding unnecessary usermeta for all new users, regardless of user role.
+
+= Version 0.2.4 - 2016/05/16 =
 * Fix for sites with thousands of users
 
-= Version 0.2.3 =
+= Version 0.2.3 - 2016/03/01 =
 * Fix for PHP warnings caused by new WordPress version.
 
-= Version 0.2.2 =
+= Version 0.2.2 - 2010/07/11 =
 * Added support of WP 3.0 post types
 * Added support for link and media manager
 * Added sepparate button for just saving the settings for new users
 
-= Version 0.2.1 =
+= Version 0.2.1 - 2010/06/17 =
 * Added support for list of posts and pages (Post -> Edit and Pages -> Edit)
 
-= Version 0.2 =
+= Version 0.2 - 2010/02/26 =
 * Custom Screen Options configuration interface was removed.
 * All the standard Wordpress Screen Options configuration panels are used, so plugin is easier to use.
 * Works with post, page and dashboard screens.
 
-= Version 0.1 =
+= Version 0.1 - 2010/02/10 =
 * Plugin has its own interface for configuring Screen Options.
 * Support only for post screen.
 
