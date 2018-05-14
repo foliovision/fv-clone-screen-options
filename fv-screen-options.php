@@ -3,7 +3,7 @@
 Plugin Name: FV Clone Screen Options 
 Plugin URI: http://foliovision.com/seo-tools/wordpress/plugins/fv-clone-screen-options
 Description: Simple plugin which lets you manage Screen Options of all the users on your blog.
-Version: 0.2.5
+Version: 0.3
 Author URI: http://foliovision.com
 
 Copyright (c) 2016 Foliovision (http://foliovision.com)
@@ -45,6 +45,23 @@ function fv_screen_options_get_metanames() {
     
     return $metafields;
   }
+}
+
+
+function fv_screen_options_get_roles() {
+  $aEditorRoles = array();
+  $aRoles = get_editable_roles();
+  if( $aRoles ) {
+    foreach( $aRoles AS $role => $aRole ) {
+      if( !empty($aRole['capabilities']['edit_posts'])) $aEditorRoles[] = $role;
+    }
+  }
+  return $aEditorRoles;
+}
+
+
+function fv_screen_options_get_users() {
+  return get_users( array('role__in'=> fv_screen_options_get_roles() ) );
 }
 
 
@@ -108,17 +125,9 @@ function fv_screen_options_head() {
       //  clone for users only if clone button was clicked
       if(isset($_POST['save_post_screen_options'])) {
         /*  get all the users IDs and save the new settings for each one of them  */
-        global $wpdb;
-        $users = $wpdb->get_col("SELECT ID FROM {$wpdb->users} AS u JOIN {$wpdb->usermeta} AS m on u.ID = m.user_id WHERE m.meta_key = '{$wpdb->prefix}capabilities' and m.meta_value != 'a:1:{s:10:\"subscriber\";b:1;}' ORDER BY display_name");
-        foreach( $users AS $userid) {
-        	$user_object = new WP_User($userid);
-  				$roles = $user_object->roles;
-  				$role = array_shift($roles);
-  				if( $role == 'subscriber' )
-  					continue;
-  				
+        foreach( fv_screen_options_get_users() AS $user_object) {
   				foreach( $fv_screen_options_array AS $metakey ) {
-        		update_user_meta($userid, $metakey, $fv_screen_options_tmp[$metakey]);
+        		update_user_meta($user_object->ID, $metakey, $fv_screen_options_tmp[$metakey]);
         	}
   				
         }
@@ -153,15 +162,7 @@ function fv_screen_options_manage()
 	<select name="source_user">
 	
 	<?php
-	global $wpdb;
-	$users = $wpdb->get_col("SELECT ID FROM {$wpdb->users} AS u JOIN {$wpdb->usermeta} AS m on u.ID = m.user_id WHERE m.meta_key = '{$wpdb->prefix}capabilities' and m.meta_value != 'a:1:{s:10:\"subscriber\";b:1;}' ORDER BY display_name LIMIT 1000");
-
-	foreach( $users AS $userid) {
-		$user_object = new WP_User($userid);
-		$roles = $user_object->roles;
-		$role = array_shift($roles);
-		if( $role == 'subscriber' )
-			continue;
+	foreach( fv_screen_options_get_users() AS $user_object) {
 	?>
 		<option value="<?php echo $user_object->ID; ?>"><?php echo $user_object->display_name; ?></option>
 	<?php } ?>
@@ -192,21 +193,21 @@ function fv_screen_options_manage()
 /*
 When new user is registered he gets all the stored Screen Options
 */
-function fv_screen_options_user_register($user_ID) {
-  $user_object = new WP_User($userid);
+function fv_screen_options_user_register($user_id) {
+  $user_object = new WP_User($user_id);
 	$roles = $user_object->roles;
-	$role = array_shift($roles);
-  
-	if( !$role || $role == 'subscriber' )
-		return;
-		
-	$fv_screen_options_array= fv_screen_options_get_metanames();
-	
-	
-	foreach( $fv_screen_options_array AS $metakey ) {
-    	update_user_meta( $user_ID, $metakey, get_option('fv_screen_options_'.$metakey) );
+  $aEditorRoles = fv_screen_options_get_roles();
+  $bFound = false;
+  foreach( $roles AS $role ) {
+    if( in_array($role,$aEditorRoles) ) $bFound = true;
   }
-	
+
+  if( $bFound ) {
+  	$fv_screen_options_array = fv_screen_options_get_metanames();
+  	foreach( $fv_screen_options_array AS $metakey ) {
+      update_user_meta( $user_id, $metakey, get_option('fv_screen_options_'.$metakey) );
+    }
+  }
 	return;
 }
 

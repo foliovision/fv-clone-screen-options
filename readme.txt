@@ -21,6 +21,9 @@ Note: Multisite is not supported very well, plugin doesn't distinguish between i
 
 == Changelog ==
 
+= Version 0.3 - 2018/05/14 =
+* Performance fix - properly detecting editor user roles rather than just skipping all subscribers
+
 = Version 0.2.5 - 2017/07/03 =
 * Hotfix for Multisite - plugin was adding unnecessary usermeta for all new users, regardless of user role.
 
