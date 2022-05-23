@@ -51,7 +51,10 @@ function fv_screen_options_get_roles() {
   $aRoles = get_editable_roles();
   if( $aRoles ) {
     foreach( $aRoles AS $role => $aRole ) {
-      if( !empty($aRole['capabilities']['edit_posts'])) $aEditorRoles[] = $role;
+      if(
+        !empty($aRole['capabilities']['edit_posts']) || // Administrator, Editor, Author, Contributor
+        !empty($aRole['capabilities']['delete_replies']) // bbPress Moderator and Keymaster roles
+      ) $aEditorRoles[] = $role;
     }
   }
   return $aEditorRoles;
