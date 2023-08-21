@@ -12,8 +12,8 @@ Copyright (c) 2019 Foliovision (http://foliovision.com)
 
 //	what will be actually cloned? It's meta keys from usermeta. This is the old way
 /*$fv_screen_options_array = array( 'metaboxhidden_post', 'closedpostboxes_post', 'screen_layout_post', 'wp_metaboxorder_post', 								'metaboxhidden_dashboard', 'closedpostboxes_dashboard', 'screen_layout_dashboard', 'wp_metaboxorder_dashboard',
-								'metaboxhidden_page', 'closedpostboxes_page', 'screen_layout_page', 'wp_metaboxorder_page',
-								'wp_usersettings', 'edit_per_page', 'manageeditcolumnshidden', 'edit_pages_per_page', 'manageeditpagescolumnshidden'
+                'metaboxhidden_page', 'closedpostboxes_page', 'screen_layout_page', 'wp_metaboxorder_page',
+                'wp_usersettings', 'edit_per_page', 'manageeditcolumnshidden', 'edit_pages_per_page', 'manageeditpagescolumnshidden'
 );*/
 
 function fv_screen_options_get_metanames() {
@@ -66,16 +66,12 @@ function fv_screen_options_get_users() {
 }
 
 
-function fv_screen_options() {
-
-}
-
 function fv_screen_options_page()
 {
-	if (function_exists('add_options_page'))
-	{
-		add_management_page('Clone Screen Options', 'Clone Screen Options', 'edit_pages', 'fv_screen_options_manage', 'fv_screen_options_manage');
-	}
+  if (function_exists('add_options_page'))
+  {
+    add_management_page('Clone Screen Options', 'Clone Screen Options', 'edit_pages', 'fv_screen_options_manage', 'fv_screen_options_manage');
+  }
 }
 
 add_action('admin_init', 'fv_screen_options_head');
@@ -114,32 +110,32 @@ function fv_screen_options_head() {
       $source_user_ID = (int) $_POST['source_user'];
       
       if(!isset($source_user_ID) || $source_user_ID == '' )
-      	return;
+        return;
       
       $fv_screen_options_array = fv_screen_options_get_metanames();
       $fv_screen_options_tmp = array();
       
       foreach( $fv_screen_options_array AS $metakey ) {
-      		$fv_screen_options_tmp[$metakey] = get_user_meta($source_user_ID, $metakey, true );
+          $fv_screen_options_tmp[$metakey] = get_user_meta($source_user_ID, $metakey, true );
       }
       
       //  clone for users only if clone button was clicked
       if(isset($_POST['save_post_screen_options'])) {
         /*  get all the users IDs and save the new settings for each one of them  */
         foreach( fv_screen_options_get_users() AS $user_object) {
-  				foreach( $fv_screen_options_array AS $metakey ) {
-        		update_user_meta($user_object->ID, $metakey, $fv_screen_options_tmp[$metakey]);
-        	}
-  				
+          foreach( $fv_screen_options_array AS $metakey ) {
+            update_user_meta($user_object->ID, $metakey, $fv_screen_options_tmp[$metakey]);
+          }
+          
         }
       }
     
       //	store for future use
       foreach( $fv_screen_options_array AS $metakey ) {
-      	if( $fv_screen_options_tmp[$metakey] != '' )
-      		update_option('fv_screen_options_'.$metakey, $fv_screen_options_tmp[$metakey]);
-      	else
-      		delete_option('fv_screen_options_'.$metakey);
+        if( $fv_screen_options_tmp[$metakey] != '' )
+          update_option('fv_screen_options_'.$metakey, $fv_screen_options_tmp[$metakey]);
+        else
+          delete_option('fv_screen_options_'.$metakey);
       }
 
       header("Location: ".$_SERVER['REQUEST_URI']);
@@ -157,17 +153,17 @@ function fv_screen_options_manage()
     <div id="icon-tools" class="icon32"><br /></div>
       <h2>FV Clone Screen Options</h2>
 
-  	<form id="adv-settings" action="" method="post">
-  	<?php _e('Clone settings for every user from') ?>
-	
-	<select name="source_user">
-	
-	<?php
-	foreach( fv_screen_options_get_users() AS $user_object) {
-	?>
-		<option value="<?php echo $user_object->ID; ?>"><?php echo $user_object->display_name; ?></option>
-	<?php } ?>
-	</select>
+    <form id="adv-settings" action="" method="post">
+    <?php _e('Clone settings for every user from') ?>
+  
+  <select name="source_user">
+  
+  <?php
+  foreach( fv_screen_options_get_users() AS $user_object) {
+  ?>
+    <option value="<?php echo $user_object->ID; ?>"><?php echo $user_object->display_name; ?></option>
+  <?php } ?>
+  </select>
 
     <?php wp_nonce_field( 'screen-options-nonce', 'screenoptionnonce', false ); ?><input type="submit" value="Clone" name="save_post_screen_options" />
     <?php wp_nonce_field( 'screen-options-nonce', 'screenoptionnonce', false ); ?><input type="submit" value="Save for new users only" name="save_post_screen_options_new_users" />
@@ -178,9 +174,11 @@ function fv_screen_options_manage()
     
     echo '<!--<h4>Stored configuration</h4>';
     
+    $fv_screen_options_array = fv_screen_options_get_metanames();
+
     foreach( $fv_screen_options_array AS $metakey ) {
-    	echo '<h5>'.$metakey.'</h5>';
-    	var_dump( get_option('fv_screen_options_'.$metakey) );
+      echo '<h5>'.$metakey.'</h5>';
+      var_dump( get_option('fv_screen_options_'.$metakey) );
     }
     
     echo '-->';
@@ -196,7 +194,7 @@ When new user is registered he gets all the stored Screen Options
 */
 function fv_screen_options_user_register($user_id) {
   $user_object = new WP_User($user_id);
-	$roles = $user_object->roles;
+  $roles = $user_object->roles;
   $aEditorRoles = fv_screen_options_get_roles();
   $bFound = false;
   foreach( $roles AS $role ) {
@@ -204,12 +202,12 @@ function fv_screen_options_user_register($user_id) {
   }
 
   if( $bFound ) {
-  	$fv_screen_options_array = fv_screen_options_get_metanames();
-  	foreach( $fv_screen_options_array AS $metakey ) {
+    $fv_screen_options_array = fv_screen_options_get_metanames();
+    foreach( $fv_screen_options_array AS $metakey ) {
       update_user_meta( $user_id, $metakey, get_option('fv_screen_options_'.$metakey) );
     }
   }
-	return;
+  return;
 }
 
 add_action('user_register', 'fv_screen_options_user_register');
@@ -217,12 +215,12 @@ add_action('user_register', 'fv_screen_options_user_register');
 add_filter('plugin_action_links', 'fv_screen_options_plugin_action_links', 10, 2);
 
 function fv_screen_options_plugin_action_links($links, $file) {
-  	$plugin_file = basename(__FILE__);
-  	if (basename($file) == $plugin_file) {
+    $plugin_file = basename(__FILE__);
+    if (basename($file) == $plugin_file) {
       $settings_link =  '<a href="'.site_url('wp-admin/tools.php?page=fv_screen_options_manage').'">Tools</a>';
-  		array_unshift($links, $settings_link);
-  	}
-  	return $links;
+      array_unshift($links, $settings_link);
+    }
+    return $links;
 }
 
 ?>
