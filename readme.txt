@@ -109,19 +109,3 @@ manually.
 1. FV Clone Screen Options in your Wordpress menu
 2. FV Clone Screen Options screen
 3. Here's how you set your own Screen Options which you are able to clone to other users
-
-== Testing ==
-
-1. Go to classic editor
-
-1.2. Change visibility of some metaboxes
-
-1.3. Go to Tools -> FV Clone Screen Options
-
-1.4. Click on "Clone"
-
-1.5. Go to another user and check if the metaboxes are hidden
-
-1.6. Create new user
-
-1.7. Check if the metaboxes are hidden
