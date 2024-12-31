@@ -5,16 +5,22 @@ Simple plugin which lets you manage Screen Options of all the users on your blog
 
 ## Testing
 
-* Go to classic editor
+* Test Screen Options for Posts -> Add New Post
 
-  1. Change visibility of some metaboxes
+  1. Install "Classic Editor" plugin
 
-  2. Go to Tools -> FV Clone Screen Options
+  2. Change visibility of some metaboxes using "Screen Options"
 
-  3. Click on "Clone"
+  3. Go to Tools -> FV Clone Screen Options
 
-  4. Go to another user and check if the metaboxes are hidden
+  4. Pick the user which you used to setup the "Screen Options" and click on "Clone".
 
-  5. Create new user
+  5. Go to another user and check if the metaboxes are hidden
 
-  6. Check if the metaboxes are hidden
+  6. Create new user
+
+  7. Check if the metaboxes are hidden
+
+  8. Register new user
+
+  9. Verify the new user has the same "Screen Options"
