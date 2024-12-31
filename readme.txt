@@ -23,6 +23,12 @@ Note: Multisite is not supported very well, plugin doesn't distinguish between i
 
 == Changelog ==
 
+= Version 0.5 - 2024/12/31 =
+
+* Tested up to: WordPress 6.7
+* Making the plugin pass Plugin Check
+* Nicer interface
+
 = Version 0.4 - 2019/06/12 =
 * Fix for WordPress 5.2.1 user registrations
 
