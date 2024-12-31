@@ -4,6 +4,8 @@ Tags: screen,screen options,editor
 Requires at least: 2.7
 Tested up to: 6.7
 Stable tag: trunk
+License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Simple plugin which lets you manage Screen Options of all the users on your blog.
 

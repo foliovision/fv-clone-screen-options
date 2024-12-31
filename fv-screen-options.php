@@ -5,6 +5,8 @@ Plugin URI: http://foliovision.com/seo-tools/wordpress/plugins/fv-clone-screen-o
 Description: Simple plugin which lets you manage Screen Options of all the users on your blog.
 Version: 0.4
 Author URI: http://foliovision.com
+License: GPL-3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
 Copyright (c) 2019 Foliovision (http://foliovision.com)
 
@@ -192,7 +194,7 @@ function fv_screen_options_manage() {
       <?php endif; ?>
 
     <form id="adv-settings" action="" method="post">
-    <?php _e('Clone settings for every user from') ?>
+      Clone settings for every user from
 
       <select name="source_user">
         <?php foreach( fv_screen_options_get_users() AS $user_object) : ?>
@@ -206,22 +208,6 @@ function fv_screen_options_manage() {
 
       <input class="button" type="submit" value="Save for new users only" name="save_post_screen_options_new_users" />
     </form>
-    
-    <?php
-    
-    echo '<!--<h4>Stored configuration</h4>';
-    
-    $fv_screen_options_array = fv_screen_options_get_metanames();
-
-    foreach( $fv_screen_options_array AS $metakey ) {
-      echo '<h5>'.$metakey.'</h5>';
-      var_dump( get_option('fv_screen_options_'.$metakey) );
-    }
-    
-    echo '-->';
-      
-    ?>
-
   </div>
   <?php
 }
